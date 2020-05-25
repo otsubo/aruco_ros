@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   dynamic_reconfigure
   geometry_msgs
+  std_msgs
   image_transport
   roscpp
   rospy
@@ -48,6 +49,11 @@ add_executable(double src/simple_double.cpp
 add_dependencies(double ${PROJECT_NAME}_gencfg)
 target_link_libraries(double ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
+add_executable(simple_markers src/simple_markers.cpp
+                      src/aruco_ros_utils.cpp)
+add_dependencies(simple_markers ${PROJECT_NAME}_gencfg)
+target_link_libraries(simple_markers ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
 add_executable(marker_publisher src/marker_publish.cpp
                                 src/aruco_ros_utils.cpp)
 add_dependencies(marker_publisher ${PROJECT_NAME}_gencfg ${catkin_EXPORTED_TARGETS})
@@ -57,7 +63,7 @@ target_link_libraries(marker_publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 ## Install ##
 #############
 
-install(TARGETS single double marker_publisher aruco_ros_utils
+install(TARGETS single double marker_publisher aruco_ros_utils simple_markers
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
